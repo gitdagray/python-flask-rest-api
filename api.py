@@ -45,7 +45,7 @@ class User(Resource):
     def get(self, id):
         user = UserModel.query.filter_by(id=id).first() 
         if not user: 
-            abort(404, "User not found")
+            abort(404, message="User not found")
         return user 
     
     @marshal_with(userFields)
@@ -53,7 +53,7 @@ class User(Resource):
         args = user_args.parse_args()
         user = UserModel.query.filter_by(id=id).first() 
         if not user: 
-            abort(404, "User not found")
+            abort(404, message="User not found")
         user.name = args["name"]
         user.email = args["email"]
         db.session.commit()
@@ -63,7 +63,7 @@ class User(Resource):
     def delete(self, id):
         user = UserModel.query.filter_by(id=id).first() 
         if not user: 
-            abort(404, "User not found")
+            abort(404, message="User not found")
         db.session.delete(user)
         db.session.commit()
         users = UserModel.query.all()
